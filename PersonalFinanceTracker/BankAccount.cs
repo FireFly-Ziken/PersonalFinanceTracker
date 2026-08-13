@@ -7,8 +7,8 @@ namespace PersonalFinanceTracker
 {
     internal class BankAccount
     {
-        //private IReadOnlyCollection<Transaction> transactiond;
-        public enum Currency {RUB, EUR, USD, GBP}
+        private readonly List<Transaction> _transactions = [];
+        public IReadOnlyCollection<Transaction> Transactions => _transactions;
 
         public Guid Id { get; init; }
         public string Name { get; private set; }
@@ -21,7 +21,8 @@ namespace PersonalFinanceTracker
         {
             Id = Guid.NewGuid();
             if (String.IsNullOrWhiteSpace(name)) 
-                throw new ArgumentException("Длинна Name не может быть равна нулю, или состоять только из пробелов!");
+                throw new ArgumentException(
+                    "Длинна Name не может быть равна нулю, или состоять только из пробелов!");
             Name = name;
             CurrencyType = currencyType;
         }
@@ -36,6 +37,7 @@ namespace PersonalFinanceTracker
                     amount,
                     "Сумма должна быть положительной");
             Balance += amount;
+            _transactions.Add(new Transaction(TransactionType.Deposit, amount, "Пополнение")); 
         }
         public void Withdraw(decimal amount)
         {
@@ -49,6 +51,7 @@ namespace PersonalFinanceTracker
             if (Balance < amount) 
                 throw new InvalidOperationException("Сумма не может быть больше баланса!");
             Balance -= amount;
+            _transactions.Add(new Transaction(TransactionType.Withdraw, amount, "Снятие"));
         }
         public bool Close()
         {
