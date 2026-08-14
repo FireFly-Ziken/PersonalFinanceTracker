@@ -22,7 +22,7 @@ namespace PersonalFinanceTracker
             Id = Guid.NewGuid();
             if (String.IsNullOrWhiteSpace(name)) 
                 throw new ArgumentException(
-                    "Длинна Name не может быть равна нулю, или состоять только из пробелов!");
+                    "The length of Name cannot be zero or consist only of spaces!");
             Name = name;
             CurrencyType = currencyType;
         }
@@ -30,28 +30,28 @@ namespace PersonalFinanceTracker
         public void Deposit(decimal amount)
         {
             if (IsOpen is false) 
-                throw new InvalidOperationException("Счет недействителен");
+                throw new InvalidOperationException("Account is invalid");
             if (amount <= 0)
                 throw new ArgumentOutOfRangeException(
                     nameof(amount),
                     amount,
-                    "Сумма должна быть положительной");
+                    "The amount must be positive");
             Balance += amount;
-            _transactions.Add(new Transaction(TransactionType.Deposit, amount, "Пополнение")); 
+            _transactions.Add(new Transaction(TransactionType.Deposit, amount, "Replenishment")); 
         }
         public void Withdraw(decimal amount)
         {
             if (IsOpen is false) 
-                throw new InvalidOperationException("Счет недействителен");
+                throw new InvalidOperationException("Account is invalid");
             if(amount <= 0)
                 throw new ArgumentOutOfRangeException(
                     nameof(amount),
                     amount,
-                    "Сумма должна быть положительной");
+                    "The amount must be positive");
             if (Balance < amount) 
-                throw new InvalidOperationException("Сумма не может быть больше баланса!");
+                throw new InvalidOperationException("The amount cannot be greater than the balance.!");
             Balance -= amount;
-            _transactions.Add(new Transaction(TransactionType.Withdraw, amount, "Снятие"));
+            _transactions.Add(new Transaction(TransactionType.Withdraw, amount, "Withdrawal"));
         }
         public bool Close()
         {

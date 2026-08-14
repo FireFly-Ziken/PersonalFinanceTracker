@@ -19,11 +19,11 @@ namespace PersonalFinanceTracker
             if (amount <= 0) throw new ArgumentOutOfRangeException(
                     nameof(amount),
                     amount,
-                    "Сумма должна быть положительной");
+                    "The amount must be positive!");
             Amount = amount;
             if (String.IsNullOrWhiteSpace(description))
                 throw new ArgumentException(
-                    "Описание не может быть пустым.",
+                    "Description cannot be empty!",
                     nameof(description));
             Description = description;
         }
