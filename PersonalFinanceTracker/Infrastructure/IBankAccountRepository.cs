@@ -1,8 +1,9 @@
-﻿using System;
+﻿using PersonalFinanceTracker.Domain;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceTracker.Service
+namespace PersonalFinanceTracker.Infrastructure
 {
     internal interface IBankAccountRepository
     {

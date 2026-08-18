@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace PersonalFinanceTracker
+namespace PersonalFinanceTracker.Domain
 {
     internal class BankAccount
     {
@@ -25,6 +26,23 @@ namespace PersonalFinanceTracker
                     "The length of Name cannot be zero or consist only of spaces!");
             Name = name;
             CurrencyType = currencyType;
+            
+        }
+
+        public static BankAccount Restore(
+            Guid id,
+            string bankAccountName,
+            decimal balance,
+            Currency currencyType,
+            DateTime dateOfCreation,
+            bool isOpen,
+            IReadOnlyCollection<Transaction> transactions)
+        {
+            ArgumentNullException.ThrowIfNull(bankAccountName);
+            ArgumentNullException.ThrowIfNull(transactions);
+            if (balance < 0) 
+                throw new ArgumentException("Account balance less than zero");
+
         }
 
         public void Deposit(decimal amount)

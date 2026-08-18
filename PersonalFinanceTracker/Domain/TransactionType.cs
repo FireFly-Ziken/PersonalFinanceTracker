@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceTracker
+namespace PersonalFinanceTracker.Domain
 {
     public enum TransactionType
     {
