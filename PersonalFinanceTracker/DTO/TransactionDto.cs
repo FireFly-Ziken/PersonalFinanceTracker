@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceTracker.Infrastructure
+namespace PersonalFinanceTracker.DTO
 {
     internal class TransactionDto
     {

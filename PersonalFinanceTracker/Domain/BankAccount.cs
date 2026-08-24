@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Transactions;
+using System.Xml.Linq;
 
 namespace PersonalFinanceTracker.Domain
 {
@@ -29,7 +31,31 @@ namespace PersonalFinanceTracker.Domain
             
         }
 
-        public static BankAccount Restore(
+        private BankAccount(
+            Guid id, 
+            string name, 
+            decimal balance, 
+            Currency currencyType, 
+            DateTime dateOfCreation, 
+            bool isOpen,
+            IReadOnlyCollection<Transaction> transactions)
+        {
+            if (String.IsNullOrWhiteSpace(name))
+                throw new ArgumentException(
+                    "The length of Name cannot be zero or consist only of spaces!");
+            if(balance < 0)
+                throw new ArgumentException("Account balance less than zero");
+
+            _transactions.AddRange(transactions);
+            Id = id;
+            Name = name;
+            Balance = balance;
+            CurrencyType = currencyType;
+            DateOfCreation = dateOfCreation;
+            IsOpen = isOpen;
+        }
+
+        internal static BankAccount Restore(
             Guid id,
             string bankAccountName,
             decimal balance,
@@ -40,8 +66,15 @@ namespace PersonalFinanceTracker.Domain
         {
             ArgumentNullException.ThrowIfNull(bankAccountName);
             ArgumentNullException.ThrowIfNull(transactions);
-            if (balance < 0) 
-                throw new ArgumentException("Account balance less than zero");
+
+            return new BankAccount(
+                id,   
+                bankAccountName,    
+                balance,          
+                currencyType,          
+                dateOfCreation,       
+                isOpen, 
+                transactions);
 
         }
 

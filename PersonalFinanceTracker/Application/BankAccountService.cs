@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PersonalFinanceTracker.Service
+namespace PersonalFinanceTracker.Application
 {
     internal class BankAccountService
     {
